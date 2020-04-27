@@ -3,7 +3,11 @@ package page.ndser.remotewakeup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,7 +18,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
+import page.ndser.remotewakeup.model.HistoryDBContract;
 import page.ndser.remotewakeup.model.WakeupHistory;
+import page.ndser.remotewakeup.util.HistoryDBSQLiteHelper;
 import page.ndser.remotewakeup.util.SendWakeup;
 
 /**
@@ -33,6 +39,22 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         findViewById(R.id.button).setOnClickListener(this::wakeup);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.history_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.history_button) {
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -77,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
         Snackbar notification = Snackbar.make(view, R.string.sent_message, Snackbar.LENGTH_SHORT);
         notification.show();
+
+        saveDetails(hostname, mac, port);
     }
 
     /**
@@ -135,5 +159,23 @@ public class MainActivity extends AppCompatActivity {
         } catch(NumberFormatException e) {
             return false;
         }
+    }
+
+    /**
+     * Save the details into the DB.
+     *
+     * @param hostname Hostname of the machine which was woken up.
+     * @param mac MAC address of the machine which was woken up.
+     * @param port Port of the machine which was woken up.
+     */
+    private void saveDetails(String hostname, String mac, String port) {
+        SQLiteDatabase db = new HistoryDBSQLiteHelper(this).getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(HistoryDBContract.History.COLUMN_HOSTNAME, hostname);
+        values.put(HistoryDBContract.History.COLUMN_MAC, mac);
+        values.put(HistoryDBContract.History.COLUMN_PORT, Integer.parseInt(port));
+
+        db.insert(HistoryDBContract.History.TABLE_NAME, null, values);
     }
 }
