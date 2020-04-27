@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textWebEditText"
-            android:text="Host Name"
+            android:hint="@string/host_name_input"
             android:paddingBottom="15dp"
             android:layout_marginBottom="25dp"/>
 
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:text="MAC Address"
+            android:hint="@string/mac_address_input"
             android:layout_below="@+id/hostnameInput"
             android:paddingBottom="15dp"
             android:layout_marginBottom="25dp"/>
@@ -39,7 +39,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
-            android:text="Port"
+            android:hint="@string/port_input"
+            android:text="@string/default_port"
             android:layout_below="@+id/macInput"
             android:paddingBottom="15dp"
             android:layout_marginBottom="25dp"/>
