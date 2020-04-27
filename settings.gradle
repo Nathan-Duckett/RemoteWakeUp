@@ -1,0 +1,2 @@
+rootProject.name='Remote Wake Up'
+include ':app'

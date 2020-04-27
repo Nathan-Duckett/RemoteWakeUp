@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Remote Wake Up</string>
+    <string name="wake_up_button">Wake Up</string>
+</resources>
