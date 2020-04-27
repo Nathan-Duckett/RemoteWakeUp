@@ -18,6 +18,14 @@ import page.ndser.remotewakeup.model.WakeupHistory;
  * @author Nathan Duckett
  */
 public class SendWakeup {
+
+    /**
+     * Send a wakeup signal to the machine specified in the details.
+     *
+     * @param details WakeupHistory details containing all of the information to wake up a PC.
+     * @throws SocketException Thrown when the socket can't be opened.
+     * @throws UnknownHostException Thrown when the hostname is invalid/can't be found.
+     */
     public static void to(WakeupHistory details) throws SocketException, UnknownHostException {
         DatagramSocket socket = new DatagramSocket();
         InetAddress address = InetAddress.getByName(details.getHostname());
