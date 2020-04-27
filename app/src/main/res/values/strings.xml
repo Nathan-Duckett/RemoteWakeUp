@@ -5,4 +5,8 @@
     <string name="mac_address_input">MAC Address</string>
     <string name="port_input">Port</string>
     <string name="default_port">9</string>
+    <string name="sent_message">Successfully sent wake up packet</string>
+    <string name="host_fail_message">Invalid Hostname provided</string>
+    <string name="mac_fail_message">Invalid MAC address provided</string>
+    <string name="port_fail_message">Invalid port provided</string>
 </resources>
