@@ -92,10 +92,14 @@ public class HistoryActivity extends AppCompatActivity {
                 String hostname = getValue(cursor, HistoryDBContract.History.COLUMN_HOSTNAME);
                 String mac = getValue(cursor, HistoryDBContract.History.COLUMN_MAC);
                 String port = getValue(cursor, HistoryDBContract.History.COLUMN_PORT);
-                historyItems.add(new WakeupHistory(mac, hostname, port));
+                WakeupHistory entry = new WakeupHistory(mac, hostname, port);
+                // Only add if it is not already in the list.
+                if (!historyItems.contains(entry)) {
+                    historyItems.add(entry);
+                }
             }
 
-            ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, historyItems);
+            ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.history_list_item, historyItems);
             historyList.setAdapter(adapter);
         }
     }

@@ -1,5 +1,8 @@
 package page.ndser.remotewakeup.model;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * Represents a WakeupHistory object storing the details from previous wake up attempts.
  *
@@ -62,6 +65,24 @@ public class WakeupHistory {
 
     @Override
     public String toString() {
-        return "Host: " + hostname + " | MAC: " + macString + " | Port: " + port;
+        return "Host: " + hostname + "\nMAC: " + macString + "\nPort: " + port;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WakeupHistory that = (WakeupHistory) o;
+        return port == that.port &&
+                Arrays.equals(mac, that.mac) &&
+                Objects.equals(macString, that.macString) &&
+                hostname.equals(that.hostname);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(macString, hostname, port);
+        result = 31 * result + Arrays.hashCode(mac);
+        return result;
     }
 }
