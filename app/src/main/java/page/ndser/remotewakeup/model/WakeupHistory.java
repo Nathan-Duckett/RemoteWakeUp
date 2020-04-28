@@ -7,21 +7,9 @@ package page.ndser.remotewakeup.model;
  */
 public class WakeupHistory {
     private byte[] mac;
+    private String macString;
     private String hostname;
     private int port;
-
-    /**
-     * Create a new WakeupHistory instance with the following details.
-     *
-     * @param mac The mac address in byte array form.
-     * @param hostname String hostname or IP address which the request is forwarded to.
-     * @param port Port to send the request through.
-     */
-    public WakeupHistory(byte[] mac, String hostname, int port) {
-        this.mac = mac;
-        this.hostname = hostname;
-        this.port = port;
-    }
 
     /**
      * Create a new WakeupHistory instance with the following details. Accepts default strings
@@ -32,6 +20,7 @@ public class WakeupHistory {
      * @param port Port to send the request through.
      */
     public WakeupHistory(String mac, String hostname, String port) {
+        this.macString = mac;
         String[] splitMac = mac.split(":");
         this.mac = new byte[6];
         for (int i = 0; i < 6; i++) {
@@ -69,5 +58,10 @@ public class WakeupHistory {
      */
     public int getPort() {
         return port;
+    }
+
+    @Override
+    public String toString() {
+        return "Host: " + hostname + " | MAC: " + macString + " | Port: " + port;
     }
 }

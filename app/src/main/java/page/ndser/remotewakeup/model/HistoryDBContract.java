@@ -16,6 +16,6 @@ public final class HistoryDBContract {
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_HOSTNAME + " TEXT, " +
                 COLUMN_MAC + " TEXT, " +
-                COLUMN_PORT + " INTEGER)";
+                COLUMN_PORT + " TEXT)";
     }
 }

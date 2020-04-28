@@ -10,4 +10,5 @@
     <string name="mac_fail_message">Invalid MAC address provided</string>
     <string name="port_fail_message">Invalid port provided</string>
     <string name="history_button_label">History</string>
+    <string name="home_button_label">Home</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,6 +31,8 @@ import page.ndser.remotewakeup.util.SendWakeup;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private HistoryDBSQLiteHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set dark mode by default
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        this.db = new HistoryDBSQLiteHelper(this);
 
         findViewById(R.id.button).setOnClickListener(this::wakeup);
     }
@@ -52,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.history_button) {
-
+            Intent intent = new Intent(this, HistoryActivity.class);
+            this.startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -100,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         Snackbar notification = Snackbar.make(view, R.string.sent_message, Snackbar.LENGTH_SHORT);
         notification.show();
 
-        saveDetails(hostname, mac, port);
+        this.db.insertHistory(hostname, mac, port);
     }
 
     /**
@@ -159,23 +165,5 @@ public class MainActivity extends AppCompatActivity {
         } catch(NumberFormatException e) {
             return false;
         }
-    }
-
-    /**
-     * Save the details into the DB.
-     *
-     * @param hostname Hostname of the machine which was woken up.
-     * @param mac MAC address of the machine which was woken up.
-     * @param port Port of the machine which was woken up.
-     */
-    private void saveDetails(String hostname, String mac, String port) {
-        SQLiteDatabase db = new HistoryDBSQLiteHelper(this).getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(HistoryDBContract.History.COLUMN_HOSTNAME, hostname);
-        values.put(HistoryDBContract.History.COLUMN_MAC, mac);
-        values.put(HistoryDBContract.History.COLUMN_PORT, Integer.parseInt(port));
-
-        db.insert(HistoryDBContract.History.TABLE_NAME, null, values);
     }
 }
