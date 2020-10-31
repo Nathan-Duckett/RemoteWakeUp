@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,6 +38,9 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        // Set dark mode by default
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         historyList = findViewById(R.id.history_list);
 
@@ -85,7 +89,9 @@ public class HistoryActivity extends AppCompatActivity {
         Cursor cursor = db.viewData();
 
         if (cursor.getCount() == 0) {
-            // Display empty count
+            // No history then redirect to send wakeup
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
         } else {
             while (cursor.moveToNext()) {
                 String friendlyName = getValue(cursor, HistoryDBContract.History.COLUMN_FRIENDLY_NAME);
