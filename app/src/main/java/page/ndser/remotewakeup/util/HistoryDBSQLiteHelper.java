@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import page.ndser.remotewakeup.model.HistoryDBContract;
 
 public class HistoryDBSQLiteHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "wakeup_history_db";
 
     public HistoryDBSQLiteHelper(Context context) {
@@ -30,14 +30,16 @@ public class HistoryDBSQLiteHelper extends SQLiteOpenHelper {
     /**
      * Insert a new History object into the database.
      *
-     * @param hostname Hostname of the machine which was woken up.
-     * @param mac MAC address of the machine which was woken up.
-     * @param port Port of the machine which was woken up.
+     * @param friendlyName Friendly name for the machine which was woken up.
+     * @param hostname     Hostname of the machine which was woken up.
+     * @param mac          MAC address of the machine which was woken up.
+     * @param port         Port of the machine which was woken up.
      */
-    public boolean insertHistory(String hostname, String mac, String port) {
+    public boolean insertHistory(String friendlyName, String hostname, String mac, String port) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(HistoryDBContract.History.COLUMN_FRIENDLY_NAME, friendlyName);
         values.put(HistoryDBContract.History.COLUMN_HOSTNAME, hostname);
         values.put(HistoryDBContract.History.COLUMN_MAC, mac);
         values.put(HistoryDBContract.History.COLUMN_PORT, port);

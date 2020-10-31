@@ -13,16 +13,18 @@ public class WakeupHistory {
     private String macString;
     private String hostname;
     private int port;
+    private String friendlyName;
 
     /**
      * Create a new WakeupHistory instance with the following details. Accepts default strings
      * and converts to expected values.
      *
-     * @param mac The mac address in the form "aa:bb:cc:dd:ee"
+     * @param mac      The mac address in the form "aa:bb:cc:dd:ee"
      * @param hostname String hostname which the request is forwarded to.
-     * @param port Port to send the request through.
+     * @param port     Port to send the request through.
      */
-    public WakeupHistory(String mac, String hostname, String port) {
+    public WakeupHistory(String friendlyName, String mac, String hostname, String port) {
+        this.friendlyName = friendlyName;
         this.macString = mac;
         String[] splitMac = mac.split(":");
         this.mac = new byte[6];
@@ -34,6 +36,15 @@ public class WakeupHistory {
 
         this.hostname = hostname;
         this.port = Integer.parseInt(port);
+    }
+
+    /**
+     * Get the friendlyName of this wakeup call.
+     *
+     * @return String containing the friendly name for this device.
+     */
+    public String getFriendlyName() {
+        return friendlyName;
     }
 
     /**
@@ -65,7 +76,7 @@ public class WakeupHistory {
 
     @Override
     public String toString() {
-        return "Host: " + hostname + "\nMAC: " + macString + "\nPort: " + port;
+        return friendlyName + "\nHost: " + hostname + "\nMAC: " + macString + "\nPort: " + port;
     }
 
     @Override

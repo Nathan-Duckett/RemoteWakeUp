@@ -7,6 +7,7 @@ public final class HistoryDBContract {
 
     public static class History implements BaseColumns {
         public static final String TABLE_NAME = "wake_history";
+        public static final String COLUMN_FRIENDLY_NAME = "friendly_name";
         public static final String COLUMN_HOSTNAME = "hostname";
         public static final String COLUMN_MAC = "mac";
         public static final String COLUMN_PORT = "port";
@@ -14,6 +15,7 @@ public final class HistoryDBContract {
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_FRIENDLY_NAME + " TEXT, " +
                 COLUMN_HOSTNAME + " TEXT, " +
                 COLUMN_MAC + " TEXT, " +
                 COLUMN_PORT + " TEXT)";

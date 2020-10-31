@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -89,10 +88,11 @@ public class HistoryActivity extends AppCompatActivity {
             // Display empty count
         } else {
             while (cursor.moveToNext()) {
+                String friendlyName = getValue(cursor, HistoryDBContract.History.COLUMN_FRIENDLY_NAME);
                 String hostname = getValue(cursor, HistoryDBContract.History.COLUMN_HOSTNAME);
                 String mac = getValue(cursor, HistoryDBContract.History.COLUMN_MAC);
                 String port = getValue(cursor, HistoryDBContract.History.COLUMN_PORT);
-                WakeupHistory entry = new WakeupHistory(mac, hostname, port);
+                WakeupHistory entry = new WakeupHistory(friendlyName, mac, hostname, port);
                 // Only add if it is not already in the list.
                 if (!historyItems.contains(entry)) {
                     historyItems.add(entry);

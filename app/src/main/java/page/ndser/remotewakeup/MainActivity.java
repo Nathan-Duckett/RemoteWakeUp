@@ -1,25 +1,20 @@
 package page.ndser.remotewakeup;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.google.android.material.snackbar.Snackbar;
 
-import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 
-import page.ndser.remotewakeup.model.HistoryDBContract;
 import page.ndser.remotewakeup.model.WakeupHistory;
 import page.ndser.remotewakeup.util.HistoryDBSQLiteHelper;
 import page.ndser.remotewakeup.util.SendWakeup;
@@ -70,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void wakeup(View view) {
         // Get values from app screen
+        String friendlyName = getTextContents(R.id.friendlyNameInput);
         String hostname = getTextContents(R.id.hostnameInput);
         String mac = getTextContents(R.id.macInput);
         String port = getTextContents(R.id.portInput);
@@ -91,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Create object with values
-        WakeupHistory details = new WakeupHistory(mac, hostname, port);
+        WakeupHistory details = new WakeupHistory(friendlyName, mac, hostname, port);
 
         // Chuck it onto a new thread -> No response so who cares
         new Thread(() -> {
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         Snackbar notification = Snackbar.make(view, R.string.sent_message, Snackbar.LENGTH_SHORT);
         notification.show();
 
-        this.db.insertHistory(hostname, mac, port);
+        this.db.insertHistory(friendlyName, hostname, mac, port);
     }
 
     /**
